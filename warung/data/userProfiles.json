@@ -1,0 +1,21 @@
+[{
+    "id": 1,
+    "adress": "2 Meadow Valley Trail",
+    "phone": "665-236-0229",
+    "UserId": 1
+  }, {
+    "id": 2,
+    "adress": "6 Manley Parkway",
+    "phone": "938-136-1747",
+    "UserId": 2
+  }, {
+    "id": 3,
+    "adress": "921 Lighthouse Bay Crossing",
+    "phone": "542-268-6550",
+    "UserId": 3
+  }, {
+    "id": 4,
+    "adress": "507 Norway Maple Place",
+    "phone": "653-198-2058",
+    "UserId": 4
+  }]
