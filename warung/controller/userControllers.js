@@ -8,7 +8,8 @@ class UserController{
     
     // login
     static showLogin(req, res){
-      res.render('login')
+      res.render('login')      
+
     }
 
     static postLogin(req, res){
@@ -17,8 +18,10 @@ class UserController{
       // res.send(req.body)
 
       User.findOne({
-          where: { name:name }
-        })
+        where :{
+          name : name
+        }
+      })
         .then(data => {
           res.send(data)
         })
