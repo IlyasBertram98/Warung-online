@@ -5,7 +5,10 @@ const userControllers = require('../controller/userControllers')
 
 
 router.get('/', userControllers.showHome)
+router.get('/register', userControllers.registerForm)
+router.post('/register', userControllers.postRegister)
 
+router.get('/login', userControllers.loginForm)
 
 
 module.exports = router
