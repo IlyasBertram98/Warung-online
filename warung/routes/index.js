@@ -10,6 +10,7 @@ router.get('/register', userControllers.registerForm)
 router.post('/register', userControllers.postRegister)
 
 router.get('/login', userControllers.loginForm)
+router.post('/login', userControllers.postLogin)
 
 
 //ke user

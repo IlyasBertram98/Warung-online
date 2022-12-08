@@ -1,5 +1,7 @@
 
   const { User } = require('../models')
+  const bcryptjs = require('bcryptjs')
+
   class UserController {
 
     static showHome(req, res){
@@ -8,8 +10,42 @@
       }
 
     static loginForm(req, res) {
-        res.render('login-form')
+        const {errorPass, errorName} = req.query
+        res.render('login-form', { errorPass, errorName })
     } 
+
+    static postLogin(req, res){
+      let errorPass
+      let errorName
+      const {name, password} = req.body
+        // res.send(req.body)
+
+        User.findOne({
+          where: {
+            name: name
+          }
+        })
+        .then(data =>{
+          
+          if (data) {
+            const isValid = bcryptjs.compareSync(password, data.password)
+
+            if (isValid) {
+              // res.redirect('/login') //nanti redirect ke setelah login
+              res.send(data)
+            } else {
+              errorPass = 'invalid password'
+              res.redirect(`/login?errorPass=${errorPass}`)
+            }
+          } else {
+            errorName = 'invalid username'
+            res.redirect(`/login?errorName=${errorName}`)
+          }
+        })
+        .catch(err=>{
+          res.send(err)
+        }) 
+    }
 
 
     static registerForm(req, res) {
@@ -30,6 +66,7 @@
       })
 
     }
+
 }
 
 module.exports = UserController
