@@ -1,44 +1,35 @@
-const { User } = require('../models')
 
-class UserController{
+  const { User } = require('../models')
+  class UserController {
 
     static showHome(req, res){
         res.render('home')
-    }
-    
-    // login
-    static showLogin(req, res){
-      res.render('login')      
+
+      }
+
+    static loginForm(req, res) {
+        res.render('login-form')
+    } 
+
+
+    static registerForm(req, res) {
+      res.render('register-form')
 
     }
+    static postRegister(req, res) {
+      // console.log(req.body);
+      const {name, password, email, role} = req.body
+      const dataUser = {name, password, email, role}
 
-    static postLogin(req, res){
-      const { name, password } = req.body
-
-      // res.send(req.body)
-
-      User.findOne({
-        where :{
-          name : name
-        }
+      User.create(dataUser)
+      .then(_ => {
+        res.redirect('/login')
       })
-        .then(data => {
-          res.send(data)
-        })
-        .catch(err =>{
-          res.send(err)
-        })
+      .catch(err => {
+        res.send(err)
+      })
 
     }
-
-    static showRegister(req, res){
-      res.render('usersProfile')
-    }
-
-    static showItems(req, res){
-      
-    }
-
 }
 
 module.exports = UserController

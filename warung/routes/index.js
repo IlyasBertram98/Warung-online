@@ -6,7 +6,10 @@ const items = require('./items')
 
 
 router.get('/', userControllers.showHome)
+router.get('/register', userControllers.registerForm)
+router.post('/register', userControllers.postRegister)
 
+router.get('/login', userControllers.loginForm)
 
 
 //ke user
