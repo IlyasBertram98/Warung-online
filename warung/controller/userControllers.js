@@ -1,21 +1,18 @@
 
 const { User, UserProfil, Item, Order} = require('../models')
+  // const { User } = require('../models')
+const bcryptjs = require('bcryptjs')
+const { Op } = require("sequelize");
 
-
-  const { User } = require('../models')
-  const bcryptjs = require('bcryptjs')
 
   class UserController {
 
-    static showHome(req, res){
+    static showHome(req, res) {
         res.render('home')
 
       }
 
-      // static registerForm(req, res) {
-      //   res.render('register-form')
-        
-      // }
+  
       
       static postRegister(req, res) {
         // console.log(req.body);
@@ -33,19 +30,41 @@ const { User, UserProfil, Item, Order} = require('../models')
       }
       
       static listItem(req, res) {
-        Item.findAll({
-          include: Order,
+         const {searchName} = req.query
+  
+        let find = {
           order: [
-            ['createdAt', 'DESC']
+            ['name', 'DESC']
           ]
-        })
+        }
+        if (searchName) {
+          find.where = {name: {[Op.iLike]: `%${searchName}%`}}
+        }
+
+        let data = {}
+
+        Item.findAll(find)
         .then(dataItem => {
+          data.dataItem = dataItem
           // console.log(dataItem);
           res.render('listItem', {dataItem})
+          // return Item.max('price')
         })
-        .catch(err => {
-          res.send(err)
-        })
+        
+        // .then(maxPrice => {
+        //   res.send(maxPrice);
+        //   data.maxPrice = maxPrice
+        //     return Item.min('price')
+        // })
+
+        // .then(minPrice => {
+        //   data.minPrice = minPrice
+        //   // res.render('listItem', {dataItem})
+        // })
+
+        // .catch(err => {
+        //   res.send(err)
+        // })
       }
 
     static loginForm(req, res) {
@@ -70,8 +89,8 @@ const { User, UserProfil, Item, Order} = require('../models')
             const isValid = bcryptjs.compareSync(password, data.password)
 
             if (isValid) {
-              // res.redirect('/login') //nanti redirect ke setelah login
-              res.send(data)
+              res.redirect('/list') //nanti redirect ke setelah login
+              // res.send(data)
             } else {
               errorPass = 'invalid password'
               res.redirect(`/login?errorPass=${errorPass}`)
@@ -92,9 +111,7 @@ const { User, UserProfil, Item, Order} = require('../models')
 
     }
     static postRegister(req, res) {
-      // console.log(req.body);
-      const {name, password, email, role} = req.body
-      const dataUser = {name, password, email, role}
+      // console.log(req.query);
 
       User.create(dataUser)
       .then(_ => {
@@ -104,6 +121,10 @@ const { User, UserProfil, Item, Order} = require('../models')
         res.send(err)
       })
 
+    }
+
+    static addItem(req, res) {
+      res.render('add-item')
     }
 
 }

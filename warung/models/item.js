@@ -13,6 +13,26 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Item.hasMany(models.Order)
     }
+
+    // static searchPrice() {
+
+    //   let find = {}
+
+    //   return Item.max('price')
+
+    //   .then(maxPrice => {
+
+    //     find.maxPrice = maxPrice
+
+    //     return Item.min('price')
+
+    //   })
+
+    //   .then(minPrice => {
+    //     find.minPrice = minPrice
+    //   })
+    // }
+
   }
   Item.init({
     name: DataTypes.STRING,

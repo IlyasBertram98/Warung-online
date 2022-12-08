@@ -22,5 +22,7 @@ router.use('/items', items)
 
 router.get('/list', userControllers.listItem)
 
+router.get('/list/add', userControllers.addItem)
+
 
 module.exports = router

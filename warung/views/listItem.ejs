@@ -9,6 +9,14 @@
 <h1>List Item</h1>
 <body>
     <table border="1">
+        <form action="/list" method="get">
+            <input type="search" name="searchName" placeholder="Search by name">
+            <input type="submit" value="submit">
+        </form>
+        <div style="padding: 10px; width: 490px; background: orange">
+            Food Max Price in Items <%=  %>  And Food Min Price in Items ? 
+        </div>
+        <table border="1">
         <thead>
             <tr>
                 <th>No</th>
@@ -16,6 +24,7 @@
                 <th>Description</th>
                 <th>Image</th>
                 <th>Price</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +35,7 @@
                     <td><%= el.description %></td>
                     <td><img src="<%= el.imageUrl %>" alt="100" width="100"></td>
                     <td><%= el.price %> </td>
+                    <td><a href="/list/add">Add</a></td>
                 </tr>
             <% }) %>
         </tbody>
@@ -33,7 +43,7 @@
     </table>
     <p>
         Order Apa ? <br>
-        <select name="ItemId" id="">
+        <select name="Item" id="">
             <option value="" selected disabled>--- SELECT ONE ---</option>
             <% dataItem.forEach(el => { %>
                 <option value="<%= el.id %>"><%= el.name %></option>
