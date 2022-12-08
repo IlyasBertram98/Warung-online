@@ -20,5 +20,7 @@ router.use('/users', users)
 
 router.use('/items', items)
 
+router.get('/list', userControllers.listItem)
+
 
 module.exports = router
