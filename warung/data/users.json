@@ -1,0 +1,25 @@
+[{
+    "id": 1,
+    "name": "Sheffield",
+    "password": "QmaeTfwZsElv",
+    "email": "sbagnal0@amazon.co.jp",
+    "role": "Subcontractor"
+  }, {
+    "id": 2,
+    "name": "Quintus",
+    "password": "7EwFp0l",
+    "email": "qsimek1@fda.gov",
+    "role": "Architect"
+  }, {
+    "id": 3,
+    "name": "Saundra",
+    "password": "Tz1FNwGf",
+    "email": "slindenbluth2@foxnews.com",
+    "role": "Construction Manager"
+  }, {
+    "id": 4,
+    "name": "Faith",
+    "password": "SsYnRUCviku3",
+    "email": "fwillson3@craigslist.org",
+    "role": "Subcontractor"
+  }]
