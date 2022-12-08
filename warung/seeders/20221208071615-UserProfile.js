@@ -15,6 +15,7 @@ module.exports = {
     */
    const dataProfile = JSON.parse(fs.readFileSync('./data/userProfiles.json', 'utf-8')).map(el => {
       el.createdAt = el.updatedAt = new Date()
+      delete el.id
       return el
    })
    // console.log(dataProfile + "ini profile") ;

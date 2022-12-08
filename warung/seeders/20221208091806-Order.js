@@ -1,5 +1,6 @@
 'use strict';
 const fs = require('fs')
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
    up (queryInterface, Sequelize) {
@@ -12,13 +13,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   const dataUser = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8')).map(el => {
-      el.createdAt = el.updatedAt = new Date()
-      delete el.id
-      return el
+   const dataOrder = JSON.parse(fs.readFileSync('./data/orders.json', 'utf-8')).map(el => {
+    el.createdAt = el.updatedAt = new Date()
+    delete el.id
+    return el 
    })
-   // console.log(dataUser + "ini user");
-   return queryInterface.bulkInsert('Users', dataUser)
+   return queryInterface.bulkInsert('Orders', dataOrder)
   },
 
    down (queryInterface, Sequelize) {
@@ -28,6 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-     return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('Orders', null, {});
   }
 };

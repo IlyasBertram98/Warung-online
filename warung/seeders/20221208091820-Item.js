@@ -12,13 +12,13 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   const dataUser = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8')).map(el => {
+     const dataItem = JSON.parse(fs.readFileSync('./data/items.json', 'utf-8')).map(el => {
       el.createdAt = el.updatedAt = new Date()
       delete el.id
       return el
    })
-   // console.log(dataUser + "ini user");
-   return queryInterface.bulkInsert('Users', dataUser)
+  //  console.log(dataItem);
+   return queryInterface.bulkInsert('Items', dataItem)
   },
 
    down (queryInterface, Sequelize) {
@@ -28,6 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-     return queryInterface.bulkDelete('Users', null, {});
+    return queryInterface.bulkDelete('Items', null, {});
   }
 };
