@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<h1>List Item</h1>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% dataItem.forEach((el, index) => { %>
+                <tr>
+                    <td><%= ++index %></td>
+                    <td><%= el.name %></td>
+                    <td><%= el.description %></td>
+                    <td><img src="<%= el.imageUrl %>" alt="100" width="100"></td>
+                    <td><%= el.price %> </td>
+                </tr>
+            <% }) %>
+        </tbody>
+        
+    </table>
+    <p>
+        Order Apa ? <br>
+        <select name="ItemId" id="">
+            <option value="" selected disabled>--- SELECT ONE ---</option>
+            <% dataItem.forEach(el => { %>
+                <option value="<%= el.id %>"><%= el.name %></option>
+            <% }) %>
+        </select>
+    </p>
+
+    <p>
+        Order Berapa ? <br>
+        <input type="number" value="number">
+    </p>
+
+    <a href="<% dataItem.imageUrl %> ">Cancel</a> | <input type="submit" value="Submit">
+</body>
+</html>

@@ -10,5 +10,7 @@ router.post('/register', userControllers.postRegister)
 
 router.get('/login', userControllers.loginForm)
 
+router.get('/list', userControllers.listItem)
+
 
 module.exports = router
