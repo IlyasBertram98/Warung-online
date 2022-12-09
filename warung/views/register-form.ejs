@@ -8,6 +8,10 @@
 </head>
     <h1 style="text-align: center;">Register</h1>
 <body>
+
+    <% if(errors){  %>
+        <p style="color: red;"> <%= errors%> </p><br>
+    <% } %>
     <form action="/register" method="post">
         <p>
             <label for="title">Username</label>

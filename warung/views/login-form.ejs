@@ -8,22 +8,19 @@
 </head>
 <h1 style="text-align: center;">Login</h1>
 <body>
-    <form action="/login" method="post">
-        <%if(errorName) { %>
 
-        <p style="color: red;"><%= errorName %></p>
+    <form action="/login" method="post">
+        <%if(error) { %>
+
+            <p style="color: red;"><%= error %></p>
 
         <%}%>
         <p>
             <label for="title">Username</label>
             <input type="text" name="name">
         </p>
-        
-        <%if(errorPass) { %>
- 
-        <p style="color: red;"><%= errorPass %></p>
 
-        <%}%>
+
         <p>
             <label for="title">Password</label>
             <input type="text" name="password">

@@ -19,21 +19,58 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg: "Name is Required"
+        },
+        notEmpty:{
+          msg: "Name is Required"
+        }
+      }
     },
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg: "Password is Required"
+        },
+        notEmpty:{
+          msg: "Password is Required"
+        }
+      }
     },
     email: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate:{
+        notNull:{
+          msg: "Email is Required"
+        },
+        notEmpty:{
+          msg: "Email is Required"
+        }
+      }
     },
     role: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg: "Role is Required"
+        },
+        notEmpty:{
+          msg: "Role is Required"
+        }
+      }
     }
   }, {
     sequelize,
     hooks:{
-      
+
       beforeCreate(user, options){
 
         const salt = bcryptjs.genSaltSync(8);

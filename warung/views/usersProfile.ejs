@@ -7,39 +7,35 @@
     <title>Warung-Online</title>
 </head>
 <body>
-     <h1>Register here!</h1>
+     <h1>User Profiles</h1>
      <hr>
-     <form action="/users/register" method="post">
-        <!-- data ini masuk ke table user -->
-        <p>
-            username:
-            <input type="text" name="name">
-        </p>
+     <a href="/list">== Back ==</a> | 
+     <%if(!user.UserProfile) {  %>
+     <a href="/users/add">Add Profile</a>
+     <%}%>
+     <hr>
+    <p>
 
-        <p>
-            password:
-            <input type="text" name="password">
-        </p>
+        Username: <%= user.name %>
 
-        <p>
-            email:
-            <input type="text" name="email">
-        </p>
+    </p>
+    <p>
 
-        <!-- data ini masuk ke table userProfiles -->
+        Email: <%= user.email %>
         
-        <p>
-            adress:
-            <input type="text" name="adress">
-        </p>
-
-        <p>
-            phone number:
-            <input type="text" name="phone">
-        </p>
-
-
-        <button type="submit" > Submit </button>
-    </form>
+    </p>
+    <p>
+        adress: <%if(user.UserProfile) {  %> <%= user.UserProfile.adress %> <%}%>
+        
+    </p>
+    <p>
+        phone:  <%if(user.UserProfile) {  %> <%= user.UserProfile.phone %> <%}%>
+        
+    </p>
+    <p>
+        
+       <!-- <a href="/users/edit">Edit Profile</a> -->  
+        
+    </p>
 </body>
 </html>

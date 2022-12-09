@@ -12,15 +12,33 @@ router.post('/register', userControllers.postRegister)
 router.get('/login', userControllers.loginForm)
 router.post('/login', userControllers.postLogin)
 
+router.use(function(req, res, next){
+
+    if (!req.session.userId) {
+        const err = `Login First!`
+        res.redirect(`/login?error=${err}`)
+        
+    } else {
+        next()
+    }
+
+})
+
+router.get('/logout', userControllers.logout)
+
+
+
+
+router.get('/list', userControllers.listItem)
 
 //ke user
 router.use('/users', users)
 
-//bycriptjs dan middleware di taruh di tengah tengah sini?
+
 
 router.use('/items', items)
 
-router.get('/list', userControllers.listItem)
+
 
 
 module.exports = router

@@ -1,8 +1,10 @@
-const { User, UserProfil, Item, Order} = require('../models')
+const { User, UserProfile, Item, Order} = require('../models')
 const bcryptjs = require('bcryptjs')
 
 
 class UserController {
+  
+    // SEBELUM LOGIN
 
     static showHome(req, res){
         res.render('home')
@@ -10,13 +12,12 @@ class UserController {
       }
 
     static loginForm(req, res) {
-        const {errorPass, errorName} = req.query
-        res.render('login-form', { errorPass, errorName })
+        const {error} = req.query
+        res.render('login-form', { error })
     } 
 
     static postLogin(req, res){
-      let errorPass
-      let errorName
+
       const {name, password} = req.body
         // res.send(req.body)
 
@@ -31,15 +32,18 @@ class UserController {
             const isValid = bcryptjs.compareSync(password, data.password)
 
             if (isValid) {
+
+              req.session.userId = data.id
+              
               res.redirect('/list') //nanti redirect ke setelah login
-              res.send(data)
+
             } else {
-              errorPass = 'invalid password'
-              res.redirect(`/login?errorPass=${errorPass}`)
+              const error = 'invalid name / password'
+              res.redirect(`/login?error=${error}`)
             }
           } else {
-            errorName = 'invalid username'
-            res.redirect(`/login?errorName=${errorName}`)
+            const error = 'invalid name / password'
+            res.redirect(`/login?error=${error}`)
           }
         })
         .catch(err=>{
@@ -48,42 +52,106 @@ class UserController {
     }
 
 
-      static registerForm(req, res) {
-        res.render('register-form')
-        
-      }
-      
-      static postRegister(req, res) {
-        // console.log(req.body);
-        const {name, password, email, role} = req.body
-        const dataUser = {name, password, email, role}
-        
-        User.create(dataUser)
-        .then(_ => {
-          res.redirect('/login')
-        })
-        .catch(err => {
-          res.send(err)
-        })
-        
-      }
+    static logout(req, res){
+      req.session.destroy((err) =>{
 
-      
-      static listItem(req, res) {
-        Item.findAll({
-          include: Order,
-          order: [
-            ['createdAt', 'DESC']
-          ]
-        })
-        .then(dataItem => {
-          // console.log(dataItem);
-          res.render('listItem', {dataItem})
-        })
-        .catch(err => {
+        if (!err) {
+          res.redirect(`/login`)
+        } else {
           res.send(err)
-        })
-      }
+        }
+
+      })
+    }
+
+    static registerForm(req, res) {
+      const { errors } = req.query
+      res.render('register-form', { errors })
+      
+    }
+    
+    static postRegister(req, res) {
+      // console.log(req.body);
+      const {name, password, email, role} = req.body
+      const dataUser = {name, password, email, role}
+      
+      User.create(dataUser)
+      .then(_ => {
+        res.redirect('/login')
+      })
+      .catch(err => {
+
+        // console.log(err);
+        if (err.name == 'SequelizeValidationError' || err.name == 'SequelizeUniqueConstraintError') {
+
+          const errors = err.errors.map(el =>  el.message )
+          res.redirect(`/register?errors=${errors}`)
+        
+        }else{
+
+          res.send(err)
+        
+        }
+
+      })
+      
+    }
+    
+
+
+    //SETELAH LOGIN
+
+    
+    static listItem(req, res) {
+      Item.findAll()
+      .then(dataItem => {
+        // console.log(dataItem);
+        res.render('listItem', {dataItem})
+      })
+      .catch(err => {
+        res.send(err)
+      })
+    }
+
+    static showUserProfile(req, res){
+
+      User.findOne({
+        where: {
+          id: req.session.userId
+        },
+        include:{
+          model : UserProfile
+        }
+      })
+      .then(user => {
+        // res.send(user)
+        res.render('usersProfile', { user })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+
+    }
+
+    static showAddUserProfile(req, res){
+      res.render('addUserProfile')
+    }
+
+    static postAddUserProfile(req, res){
+      const { adress, phone } = req.body
+
+      UserProfile.create({
+        UserId: req.session.userId,
+        adress: adress,
+        phone: phone
+      })
+      .then(
+        res.redirect('/users')
+      )
+      .catch(err => {
+        res.send(err)
+      })
+    }
 
 
 }
